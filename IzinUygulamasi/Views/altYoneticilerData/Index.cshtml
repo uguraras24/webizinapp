@@ -1,0 +1,134 @@
+﻿@model IEnumerable<IzinUygulamasi.Models.altYoneticiler>
+
+@{
+    Layout = "~/Views/Shared/_UstYoneticiLayout.cshtml";
+    ViewBag.Title = "Alt Yöneticiler";
+    ViewBag.Menu = "altyonetici";
+}
+
+@section footerJs
+{
+    <script>
+        $(document).ready(function () {
+            $('#yoneticiTable').DataTable(
+                {
+                    responsive: true,
+                    "order": [0, 'desc']
+
+                });
+
+                $(".yoneticiSil").on('click', function(event){
+		        event.preventDefault();
+		        var yoneticiId = $(this).next().val();
+		        var printText= "Yöneticiyi silmek istediğinize emin misiniz?";
+		
+		        Swal.fire({
+		        title: 'Onay Sorusu',
+		        html: printText,
+		        icon: 'question',
+		        showCancelButton: true,
+		        confirmButtonColor: '#3085d6',
+		        cancelButtonColor: '#d33',
+		        confirmButtonText: 'Evet',
+		        cancelButtonText: 'İptal',
+		        }).then((result) => {
+		        if (result.value){	
+                    $.ajax({
+                    url: '/altYoneticilerData/Delete',
+                    type: 'post',
+                    dataType: "json",
+                    data: { yoneticiId: yoneticiId },
+                    success: function(response){
+				        if(response.result=="1")
+				        {
+					        Swal.fire({
+						        icon: "success",
+						        title: "Bilgi Penceresi",
+						        text: "Yönetici kaydı başarıyla silinmiştir.",
+						        type: "success"
+					        }).then(function() {
+						        window.location = "/altYoneticilerData";
+					        });
+				        }
+				        else
+				        {
+					        Swal.fire({
+						        icon: "error",
+						        title: "Bilgi Penceresi",
+						        text: "Yönetici silme işleminde hata ile karşılaşıldı."
+					        });
+				        }
+				        }
+			        });
+			
+			
+		        }
+		        });
+	
+            });
+        });
+    </script>
+}
+<div class="utils__content">
+    <div class="card">
+        <div class="card-header">
+            <span class="utils__title">
+                <strong>Alt Yöneticiler</strong>
+            </span>
+            <div class="row mt-3">
+                <div class="col-sm-12 col-md-12">
+                    @Html.ActionLink("Alt Yönetici Ekle", "Create", null, new { @class = "btn btn-success btn-md" })
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover nowrap" id="yoneticiTable">
+                <thead class="thead-default">
+                    <tr>
+                        <th>Kullanici Adı</th>
+                        <th>Adi Soyadi</th>
+                        <th>E-Mail</th>
+                        <th>Aktiflik</th>
+                        <th>İşe Giriş Tarihi</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a_kullanici_adi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a_adi_soyadi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a_email)
+                        </td>
+                        @if (item.a_aktiflik == 1)
+                        {
+                            <td><span class='badge badge-pill badge-success mr-2 mb-2'>Aktif</span></td>
+                        }
+                        else
+                        {
+                            <td><span class='badge badge-pill badge-danger mr-2 mb-2'>Pasif</span></td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.a_ise_giris_tarihi)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.a_id }, new { @class = "btn btn-primary btn-sm pl-3 pr-3" })
+                            @Html.ActionLink("Sil", "Delete", new { id = item.a_id }, new { @class = "btn btn-danger btn-sm pl-3 pr-3 yoneticiSil" })
+                            <input type="text" class="d-none" value="@item.a_id.ToString()" />
+                        </td>
+                    </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

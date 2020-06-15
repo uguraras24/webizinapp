@@ -1,0 +1,172 @@
+﻿@model IEnumerable<IzinUygulamasi.Models.Custom.OnayIzinler>
+
+@{
+    Layout = "~/Views/Shared/_AltYoneticiLayout.cshtml";
+    ViewBag.Title = "Alt Yönetici Ana Sayfa";
+    ViewBag.Menu = "onaybekleyen";
+}
+
+@section footerJs
+{
+    <script>
+        $(document).ready(function ()
+        {
+            $('#onayTable').DataTable(
+            {
+                responsive: true,
+                "order": [0,'desc']
+
+            });
+
+            $(".izinOnayla").on('click', function(event){
+		    event.preventDefault();
+		    var izinId = $(this).next().next().val();
+		    var printText= "İzni onaylamak istediğinize emin misiniz?";
+		
+		    Swal.fire({
+		    title: 'Onay Sorusu',
+		    html: printText,
+		    icon: 'question',
+		    showCancelButton: true,
+		    confirmButtonColor: '#3085d6',
+		    cancelButtonColor: '#d33',
+		    confirmButtonText: 'Evet',
+		    cancelButtonText: 'İptal',
+		    }).then((result) => {
+		    if (result.value){	
+                $.ajax({
+                url: '/AltYonetici/IzinOnayla',
+                type: 'post',
+                dataType: "json",
+                data: { izinId: izinId },
+                success: function(response){
+				    if(response.result=="1")
+				    {
+					    Swal.fire({
+						    icon: "success",
+						    title: "Bilgi Penceresi",
+						    text: "İzin başarıyla onaylanmıştır.",
+						    type: "success"
+					    }).then(function() {
+						    window.location = "/AltYonetici/OnayBekleyenIzinler";
+					    });
+				    }
+				    else
+				    {
+					    Swal.fire({
+						    icon: "error",
+						    title: "Bilgi Penceresi",
+						    text: "İzin onaylama işleminde hata ile karşılaşıldı."
+					    });
+				    }
+				    }
+			    });
+			
+			
+		    }
+		    });
+	
+            });
+
+            $(".izinReddet").on('click', function(event){
+		    event.preventDefault(); 
+		    var izinId = $(this).next().val();
+		    var printText= "İzni reddetmek istediğinize emin misiniz?";
+		
+		    Swal.fire({
+		    title: 'Onay Sorusu',
+		    html: printText,
+		    icon: 'question',
+		    showCancelButton: true,
+		    confirmButtonColor: '#3085d6',
+		    cancelButtonColor: '#d33',
+		    confirmButtonText: 'Evet',
+		    cancelButtonText: 'İptal',
+		    }).then((result) => {
+		    if (result.value){	
+                $.ajax({
+                url: '/AltYonetici/IzinReddet',
+                type: 'post',
+                dataType: "json",
+                data: { izinId: izinId },
+                success: function(response){
+				    if(response.result=="1")
+				    {
+					    Swal.fire({
+						    icon: "success",
+						    title: "Bilgi Penceresi",
+						    text: "İzin başarıyla reddedilmiştir.",
+						    type: "success"
+					    }).then(function() {
+						    window.location = "/AltYonetici/OnayBekleyenIzinler";
+					    });
+				    }
+				    else
+				    {
+					    Swal.fire({
+						    icon: "error",
+						    title: "Bilgi Penceresi",
+						    text: "İzin reddetme işleminde hata ile karşılaşıldı."
+					    });
+				    }
+				    }
+			    });
+			
+			
+		    }
+		    });
+	
+            });
+        });
+    </script>
+}
+<div class="utils__content">
+    <div class="card">
+        <div class="card-header">
+            <span class="utils__title">
+                <strong>Onay Bekleyen İzinler</strong>
+            </span>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover nowrap" id="onayTable">
+                <thead class="thead-default">
+                    <tr>
+                        <th class="d-none">İzin Id</th>
+                        <th>Adı Soyadı</th>
+                        <th>Başlangıç Tarihi</th>
+                        <th>Bitiş Tarihi</th>
+                        <th>İzin Türü</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="d-none">
+                            @item.izin_id.ToString()
+                        </td>
+                        <td>
+                            @item.adi_soyadi.ToString()
+                        </td>
+                        <td>
+                            @item.baslangic_tarihi.ToString()
+                        </td>
+                        <td>
+                            @item.bitis_tarihi.ToString()
+                        </td>
+                        <td>
+                            @item.izin_turu.ToString()
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-success btn-sm pl-5 pr-5 izinOnayla">Onayla</a>
+                            <a href="" class="btn btn-danger btn-sm pl-5 pr-5 izinReddet">Reddet</a>
+                            <input type="text" class="d-none" value="@item.izin_id.ToString()" />
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

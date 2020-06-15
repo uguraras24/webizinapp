@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <link href="components/dummy-assets/common/img/favicon.png" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/owl.carousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/jquery-steps/demo/css/jquery.steps.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-linearicons/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-icomoon/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/sweetalert/sweetalert2.min.css">
+ 
+    <link rel="stylesheet" type="text/css" href="~/Content/components/core/common/core.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/core/widgets/widgets.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/vendors/common/vendors.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/settings/common/settings.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/settings/themes/themes.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/menu-left/common/menu-left.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/menu-right/common/menu-right.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/top-bar/common/top-bar.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/footer/common/footer.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/pages/common/pages.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/apps/common/apps.cleanui.css">
+</head>
+<body class="config--vertical config--borderLess menu-left--colorful menu-left--shadow">
+    <nav class="menu-left">
+        <div class="menu-left__lock menu-left__action--menu-toggle">
+            <div class="menu-left__pin-button">
+                <div><!-- --></div>
+            </div>
+        </div>
+        <div class="menu-left__logo">
+            <h4 class="text-light mt-2">Personel Paneli</h4>
+        </div>
+        <div class="menu-left__inner">
+            <ul class="menu-left__list menu-left__list--root">
+                <li class="menu-left__item @(ViewBag.Menu=="uy_anasayfa"?"menu-left__item--active":"")">
+                    <a href="/Personel">
+                        <span class="menu-left__icon icmn-home"></span>
+                        Ana Sayfa
+                    </a>
+                </li>
+                <li class="menu-left__divider"></li>
+                <li class="menu-left__item @(ViewBag.Menu=="izinal"?"menu-left__item--active":"")">
+                    <a href="/Personel/IzinAl">
+                        <span class="menu-left__icon icmn-pencil"></span>
+                        İzin Al
+                    </a>
+                </li>
+                <li class="menu-left__divider"></li>
+                <li class="menu-left__item @(ViewBag.Menu=="tumizinler"?"menu-left__item--active":"")">
+                    <a href="/Personel/TumIzinlerim">
+                        <span class="menu-left__icon icmn-file-text"></span>
+                        Tüm İzinlerim
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="top-bar">
+        <!-- left aligned items -->
+        <div class="top-bar__left">
+            <div class="top-bar__item d-none d-md-block">
+            </div>
+        </div>
+        <!-- right aligned items -->
+        <div class="top-bar__right">
+            <div class="top-bar__item d-none d-md-block mr-3">
+                <form action="/Personel/Logout" method="post">
+                    <input type="submit" class="btn btn-danger btn-md" value="Çıkış Yap" />
+                </form>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/Content/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="~/Content/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+    <script src="~/Content/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="~/Content/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="~/Content/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+    <script src="~/Content/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/Content/vendors/sweetalert/sweetalert2.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <script src="~/Content/components/menu-left/common/menu-left.cleanui.js"></script>
+    <script src="~/Content/components/menu-right/common/menu-right.cleanui.js"></script>
+    <script src="~/Content/vendors/export-table/xlsx.core.min.js"></script>
+    <script src="~/Content/vendors/export-table/FileSaver.min.js"></script>
+    <script src="~/Content/vendors/export-table/jspdf.min.js"></script>
+    <script src="~/Content/vendors/export-table/jspdf.plugin.autotable.js"></script>
+    <script src="~/Content/vendors/export-table/html2canvas.min.js"></script>
+    <script src="~/Content/vendors/export-table/tableExport.js"></script>
+    <script type="text/javaScript">
+        function doExport(selector, params) {
+            var options = {
+            };
+
+            $.extend(true, options, params);
+
+            $(selector).tableExport(options);
+        }
+        function printData(tableName) {
+            var divToPrint = document.getElementById(tableName);
+            newWin = window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+    </script>
+    @RenderSection("sweet", required: false)
+    @RenderSection("footerJs", required: false)
+</body>
+</html>

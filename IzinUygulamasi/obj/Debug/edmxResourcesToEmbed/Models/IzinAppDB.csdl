@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="izinAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="izinAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="personeller" EntityType="izinAppModel.personeller" />
+    <EntitySet Name="izinler" EntityType="izinAppModel.izinler" />
+    <EntitySet Name="sysdiagrams" EntityType="izinAppModel.sysdiagrams" />
+    <AssociationSet Name="FK_izinler_personeller" Association="izinAppModel.FK_izinler_personeller">
+      <End Role="personeller" EntitySet="personeller" />
+      <End Role="izinler" EntitySet="izinler" />
+    </AssociationSet>
+    <EntitySet Name="izinTurleri" EntityType="izinAppModel.izinTurleri" />
+    <AssociationSet Name="FK_izinler_izinTurleri" Association="izinAppModel.FK_izinler_izinTurleri">
+      <End Role="izinTurleri" EntitySet="izinTurleri" />
+      <End Role="izinler" EntitySet="izinler" />
+    </AssociationSet>
+    <EntitySet Name="altYoneticiler" EntityType="izinAppModel.altYoneticiler" />
+    <AssociationSet Name="FK_personeller_altYoneticiler" Association="izinAppModel.FK_personeller_altYoneticiler">
+      <End Role="altYoneticiler" EntitySet="altYoneticiler" />
+      <End Role="personeller" EntitySet="personeller" />
+    </AssociationSet>
+    <EntitySet Name="sysAdmin" EntityType="izinAppModel.sysAdmin" />
+  </EntityContainer>
+  <EntityType Name="personeller">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="p_kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="p_kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="p_adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="p_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="p_aktiflik" Type="Boolean" />
+    <Property Name="p_ise_giris_tarihi" Type="DateTime" Precision="0" />
+    <Property Name="p_olusturulma_tarihi" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="izinler" Relationship="izinAppModel.FK_izinler_personeller" FromRole="personeller" ToRole="izinler" />
+    <Property Name="altYoneticiId" Type="Int32" />
+    <NavigationProperty Name="altYoneticiler" Relationship="izinAppModel.FK_personeller_altYoneticiler" FromRole="personeller" ToRole="altYoneticiler" />
+  </EntityType>
+  <EntityType Name="izinler">
+    <Key>
+      <PropertyRef Name="izin_id" />
+    </Key>
+    <Property Name="izin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="personel_id" Type="Int32" />
+    <Property Name="baslangic_tarihi" Type="DateTime" Precision="3" />
+    <Property Name="bitis_tarihi" Type="DateTime" Precision="3" />
+    <Property Name="izin_turu" Type="Int32" />
+    <Property Name="izin_aciklamasi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="personeller" Relationship="izinAppModel.FK_izinler_personeller" FromRole="izinler" ToRole="personeller" />
+    <Property Name="olusturulma_tarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="izinTurleri" Relationship="izinAppModel.FK_izinler_izinTurleri" FromRole="izinler" ToRole="izinTurleri" />
+    <Property Name="alt_yonetici_id" Type="Int32" />
+    <Property Name="izin_durumu" Type="Int32" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_izinler_personeller">
+    <End Type="izinAppModel.personeller" Role="personeller" Multiplicity="0..1" />
+    <End Type="izinAppModel.izinler" Role="izinler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="personeller">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="izinler">
+        <PropertyRef Name="personel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="izinTurleri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="izin_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="izin_aktiflik" Type="Boolean" />
+    <NavigationProperty Name="izinler" Relationship="izinAppModel.FK_izinler_izinTurleri" FromRole="izinTurleri" ToRole="izinler" />
+  </EntityType>
+  <Association Name="FK_izinler_izinTurleri">
+    <End Type="izinAppModel.izinTurleri" Role="izinTurleri" Multiplicity="0..1" />
+    <End Type="izinAppModel.izinler" Role="izinler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="izinTurleri">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="izinler">
+        <PropertyRef Name="izin_turu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="altYoneticiler">
+    <Key>
+      <PropertyRef Name="a_id" />
+    </Key>
+    <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="a_kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="a_kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="a_adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="a_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="a_aktiflik" Type="Boolean" />
+    <Property Name="a_ise_giris_tarihi" Type="DateTime" Precision="0" />
+    <Property Name="a_olusturulma_tarihi" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="personeller" Relationship="izinAppModel.FK_personeller_altYoneticiler" FromRole="altYoneticiler" ToRole="personeller" />
+  </EntityType>
+  <Association Name="FK_personeller_altYoneticiler">
+    <End Type="izinAppModel.altYoneticiler" Role="altYoneticiler" Multiplicity="0..1" />
+    <End Type="izinAppModel.personeller" Role="personeller" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="altYoneticiler">
+        <PropertyRef Name="a_id" />
+      </Principal>
+      <Dependent Role="personeller">
+        <PropertyRef Name="altYoneticiId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="sysAdmin">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

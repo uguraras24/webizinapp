@@ -1,0 +1,68 @@
+﻿@model IEnumerable<IzinUygulamasi.Models.izinler>
+
+@{
+    Layout = "~/Views/Shared/_PersonelLayout.cshtml";
+    ViewBag.Title = "Tüm İzinlerim";
+    ViewBag.Menu = "tumizinler";
+}
+
+@section footerJs
+{
+    <script>
+        $(document).ready(function ()
+        {
+            $('#izinTable').DataTable(
+            {
+                responsive: true,
+                "order": [0,'desc']
+
+            });
+        });
+    </script>
+}
+<div class="utils__content">
+    <div class="card">
+        <div class="card-header">
+            <span class="utils__title">
+                <strong>Tüm İzinlerim</strong>
+            </span>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover nowrap" id="izinTable">
+                <thead class="thead-default">
+                    <tr>
+                        <th class="d-none">İzin Id</th>
+                        <th>İzin Türü</th>
+                        <th>Başlangıç Tarihi</th>
+                        <th>Bitiş Tarihi</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td class="d-none">
+                            @Html.DisplayFor(modelItem => item.izin_id)
+                        </td>
+                        @if (item.izin_durumu == 4)
+                        {
+                            <td><span class='badge badge-pill badge-success mr-2 mb-2'>Onaylı</span></td>
+                        }
+                        else
+                        {
+                            <td><span class='badge badge-pill badge-danger mr-2 mb-2'>Pasif</span></td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.baslangic_tarihi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.bitis_tarihi)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

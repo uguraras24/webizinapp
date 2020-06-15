@@ -1,0 +1,82 @@
+﻿@model IzinUygulamasi.Models.altYoneticiler
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>altYoneticiler</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.a_kullanici_adi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_kullanici_adi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_kullanici_sifre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_kullanici_sifre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_adi_soyadi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_adi_soyadi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_aktiflik)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_aktiflik)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_ise_giris_tarihi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_ise_giris_tarihi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.a_olusturulma_tarihi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.a_olusturulma_tarihi)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.a_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

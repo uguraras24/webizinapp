@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="izinApp2ModelStoreContainer" CdmEntityContainer="izinApp2Entities">
+    <EntitySetMapping Name="altYoneticiler">
+      <EntityTypeMapping TypeName="izinApp2Model.altYoneticiler">
+        <MappingFragment StoreEntitySet="altYoneticiler">
+          <ScalarProperty Name="a_aktiflik" ColumnName="a_aktiflik" />
+          <ScalarProperty Name="a_id" ColumnName="a_id" />
+          <ScalarProperty Name="a_kullanici_adi" ColumnName="a_kullanici_adi" />
+          <ScalarProperty Name="a_kullanici_sifre" ColumnName="a_kullanici_sifre" />
+          <ScalarProperty Name="a_adi_soyadi" ColumnName="a_adi_soyadi" />
+          <ScalarProperty Name="a_email" ColumnName="a_email" />
+          <ScalarProperty Name="a_ise_giris_tarihi" ColumnName="a_ise_giris_tarihi" />
+          <ScalarProperty Name="a_olusturulma_tarihi" ColumnName="a_olusturulma_tarihi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="izinler">
+      <EntityTypeMapping TypeName="izinApp2Model.izinler">
+        <MappingFragment StoreEntitySet="izinler">
+          <ScalarProperty Name="izin_id" ColumnName="izin_id" />
+          <ScalarProperty Name="personel_id" ColumnName="personel_id" />
+          <ScalarProperty Name="alt_yonetici_id" ColumnName="alt_yonetici_id" />
+          <ScalarProperty Name="olusturulma_tarihi" ColumnName="olusturulma_tarihi" />
+          <ScalarProperty Name="baslangic_tarihi" ColumnName="baslangic_tarihi" />
+          <ScalarProperty Name="bitis_tarihi" ColumnName="bitis_tarihi" />
+          <ScalarProperty Name="izin_turu" ColumnName="izin_turu" />
+          <ScalarProperty Name="izin_aciklamasi" ColumnName="izin_aciklamasi" />
+          <ScalarProperty Name="izin_durumu" ColumnName="izin_durumu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="izinTurleri">
+      <EntityTypeMapping TypeName="izinApp2Model.izinTurleri">
+        <MappingFragment StoreEntitySet="izinTurleri">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="izin_adi" ColumnName="izin_adi" />
+          <ScalarProperty Name="izin_aktiflik" ColumnName="izin_aktiflik" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="personeller">
+      <EntityTypeMapping TypeName="izinApp2Model.personeller">
+        <MappingFragment StoreEntitySet="personeller">
+          <ScalarProperty Name="p_id" ColumnName="p_id" />
+          <ScalarProperty Name="p_kullanici_adi" ColumnName="p_kullanici_adi" />
+          <ScalarProperty Name="p_kullanici_sifre" ColumnName="p_kullanici_sifre" />
+          <ScalarProperty Name="p_adi_soyadi" ColumnName="p_adi_soyadi" />
+          <ScalarProperty Name="p_email" ColumnName="p_email" />
+          <ScalarProperty Name="p_aktiflik" ColumnName="p_aktiflik" />
+          <ScalarProperty Name="p_ise_giris_tarihi" ColumnName="p_ise_giris_tarihi" />
+          <ScalarProperty Name="p_olusturulma_tarihi" ColumnName="p_olusturulma_tarihi" />
+          <ScalarProperty Name="altYoneticiId" ColumnName="altYoneticiId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysAdmin">
+      <EntityTypeMapping TypeName="izinApp2Model.sysAdmin">
+        <MappingFragment StoreEntitySet="sysAdmin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="kullanici_adi" ColumnName="kullanici_adi" />
+          <ScalarProperty Name="kullanici_sifre" ColumnName="kullanici_sifre" />
+          <ScalarProperty Name="adi_soyadi" ColumnName="adi_soyadi" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="izinApp2Model.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

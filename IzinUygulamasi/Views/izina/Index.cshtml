@@ -1,0 +1,77 @@
+﻿@model IEnumerable<IzinUygulamasi.Models.altYoneticiler>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.a_kullanici_adi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_kullanici_sifre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_adi_soyadi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_aktiflik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_ise_giris_tarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.a_olusturulma_tarihi)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_kullanici_adi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_kullanici_sifre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_adi_soyadi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_aktiflik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_ise_giris_tarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.a_olusturulma_tarihi)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.a_id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.a_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.a_id })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

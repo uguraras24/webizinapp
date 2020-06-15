@@ -1,0 +1,108 @@
+﻿@model IzinUygulamasi.Models.altYoneticiler
+
+@{
+    Layout = "~/Views/Shared/_UstYoneticiLayout.cshtml";
+    ViewBag.Title = "Yönetici Ekle";
+    ViewBag.Menu = "altyonetici";
+}
+
+@section sweet
+{
+    @if (TempData["YoneticiEkle"] == "basari")
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "Bilgi Penceresi",
+                html: 'Alt yönetici başarıyla eklenmiştir.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/altYoneticilerData/Index';
+            });
+        </script>
+    }
+    @if (TempData["YoneticiEkle"] == "hata")
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: "Bilgi Penceresi",
+                html: 'Alt yönetici ekleme işleminde hata ile karşılaşıldı, lütfen tekrar deneyiniz.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/altYoneticilerData/Create';
+            });
+        </script>
+    }
+}
+
+<div class="utils__content">
+    <section class="card">
+        <div class="card-header">
+            <span class="utils__title">
+                <strong>Yönetici Ekle</strong>
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <!-- Horizontal Form -->
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_kullanici_adi, "Kullanıcı Adı", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.a_kullanici_adi, "Kullanıcı Adı", htmlAttributes: new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_kullanici_sifre, "Kullanıcı Şifre", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.a_kullanici_sifre, "Kullanıcı Şifre", htmlAttributes: new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_adi_soyadi, "Adı Soyadı", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.a_adi_soyadi, "Adı Soyadı", htmlAttributes: new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_email, "Email", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.a_email, "Email", htmlAttributes: new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_aktiflik, "Aktiflik", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.DropDownListFor(m => m.a_aktiflik, new List<SelectListItem> {
+                                        new SelectListItem() {Text = "Aktif", Value="1"},
+                                        new SelectListItem() {Text = "Pasif", Value="0"} },htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.a_ise_giris_tarihi, "İşe Giriş Tarihi", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.a_ise_giris_tarihi, "İşe Giriş Tarihi", htmlAttributes: new { type = "datetime-local", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="form-group row">
+                                    <div class="col-md-9 offset-md-3">
+                                        <input type="submit" class="btn btn-primary pl-4 pr-4" value="Ekle" />
+                                        <a onclick="history.go(-1); return false;" href="#" class="btn btn-default">Geri Dön</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

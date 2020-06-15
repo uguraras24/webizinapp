@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="izinApp2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="altYoneticiler">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="a_kullanici_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="a_kullanici_sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="a_adi_soyadi" Type="nvarchar" MaxLength="100" />
+          <Property Name="a_email" Type="nvarchar" MaxLength="100" />
+          <Property Name="a_aktiflik" Type="int" StoreGeneratedPattern="None" />
+          <Property Name="a_ise_giris_tarihi" Type="date" />
+          <Property Name="a_olusturulma_tarihi" Type="date" />
+        </EntityType>
+        <EntityType Name="izinler">
+          <Key>
+            <PropertyRef Name="izin_id" />
+          </Key>
+          <Property Name="izin_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="personel_id" Type="int" />
+          <Property Name="alt_yonetici_id" Type="int" />
+          <Property Name="olusturulma_tarihi" Type="datetime" />
+          <Property Name="baslangic_tarihi" Type="datetime" />
+          <Property Name="bitis_tarihi" Type="datetime" />
+          <Property Name="izin_turu" Type="int" />
+          <Property Name="izin_aciklamasi" Type="text" />
+          <Property Name="izin_durumu" Type="int" />
+        </EntityType>
+        <EntityType Name="izinTurleri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="izin_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="izin_aktiflik" Type="int" />
+        </EntityType>
+        <EntityType Name="personeller">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="p_kullanici_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_kullanici_sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_adi_soyadi" Type="nvarchar" MaxLength="100" />
+          <Property Name="p_email" Type="nvarchar" MaxLength="100" />
+          <Property Name="p_aktiflik" Type="int" />
+          <Property Name="p_ise_giris_tarihi" Type="date" />
+          <Property Name="p_olusturulma_tarihi" Type="date" />
+          <Property Name="altYoneticiId" Type="int" />
+        </EntityType>
+        <EntityType Name="sysAdmin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullanici_sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="adi_soyadi" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_izinler_izinTurleri">
+          <End Role="izinTurleri" Type="Self.izinTurleri" Multiplicity="0..1" />
+          <End Role="izinler" Type="Self.izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="izinTurleri">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="izinler">
+              <PropertyRef Name="izin_turu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_izinler_personeller">
+          <End Role="personeller" Type="Self.personeller" Multiplicity="0..1" />
+          <End Role="izinler" Type="Self.izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personeller">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="izinler">
+              <PropertyRef Name="personel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_personeller_altYoneticiler">
+          <End Role="altYoneticiler" Type="Self.altYoneticiler" Multiplicity="0..1" />
+          <End Role="personeller" Type="Self.personeller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="altYoneticiler">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="personeller">
+              <PropertyRef Name="altYoneticiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="izinApp2ModelStoreContainer">
+          <EntitySet Name="altYoneticiler" EntityType="Self.altYoneticiler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="izinler" EntityType="Self.izinler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="izinTurleri" EntityType="Self.izinTurleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personeller" EntityType="Self.personeller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysAdmin" EntityType="Self.sysAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_izinler_izinTurleri" Association="Self.FK_izinler_izinTurleri">
+            <End Role="izinTurleri" EntitySet="izinTurleri" />
+            <End Role="izinler" EntitySet="izinler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_izinler_personeller" Association="Self.FK_izinler_personeller">
+            <End Role="personeller" EntitySet="personeller" />
+            <End Role="izinler" EntitySet="izinler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_personeller_altYoneticiler" Association="Self.FK_personeller_altYoneticiler">
+            <End Role="altYoneticiler" EntitySet="altYoneticiler" />
+            <End Role="personeller" EntitySet="personeller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="izinApp2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="altYoneticiler">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="a_kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="a_adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="a_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="a_aktiflik" Type="Int32" />
+          <Property Name="a_ise_giris_tarihi" Type="DateTime" Precision="0" />
+          <Property Name="a_olusturulma_tarihi" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="personeller" Relationship="Self.FK_personeller_altYoneticiler" FromRole="altYoneticiler" ToRole="personeller" />
+        </EntityType>
+        <EntityType Name="izinler">
+          <Key>
+            <PropertyRef Name="izin_id" />
+          </Key>
+          <Property Name="izin_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="personel_id" Type="Int32" />
+          <Property Name="alt_yonetici_id" Type="Int32" />
+          <Property Name="olusturulma_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="baslangic_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="bitis_tarihi" Type="DateTime" Precision="3" />
+          <Property Name="izin_turu" Type="Int32" />
+          <Property Name="izin_aciklamasi" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="izin_durumu" Type="Int32" />
+          <NavigationProperty Name="izinTurleri" Relationship="Self.FK_izinler_izinTurleri" FromRole="izinler" ToRole="izinTurleri" />
+          <NavigationProperty Name="personeller" Relationship="Self.FK_izinler_personeller" FromRole="izinler" ToRole="personeller" />
+        </EntityType>
+        <EntityType Name="izinTurleri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="izin_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="izin_aktiflik" Type="Int32" />
+          <NavigationProperty Name="izinler" Relationship="Self.FK_izinler_izinTurleri" FromRole="izinTurleri" ToRole="izinler" />
+        </EntityType>
+        <EntityType Name="personeller">
+          <Key>
+            <PropertyRef Name="p_id" />
+          </Key>
+          <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="p_kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="p_email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="p_aktiflik" Type="Int32" />
+          <Property Name="p_ise_giris_tarihi" Type="DateTime" Precision="0" />
+          <Property Name="p_olusturulma_tarihi" Type="DateTime" Precision="0" />
+          <Property Name="altYoneticiId" Type="Int32" />
+          <NavigationProperty Name="altYoneticiler" Relationship="Self.FK_personeller_altYoneticiler" FromRole="personeller" ToRole="altYoneticiler" />
+          <NavigationProperty Name="izinler" Relationship="Self.FK_izinler_personeller" FromRole="personeller" ToRole="izinler" />
+        </EntityType>
+        <EntityType Name="sysAdmin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullanici_sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adi_soyadi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_personeller_altYoneticiler">
+          <End Role="altYoneticiler" Type="Self.altYoneticiler" Multiplicity="0..1" />
+          <End Role="personeller" Type="Self.personeller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="altYoneticiler">
+              <PropertyRef Name="a_id" />
+            </Principal>
+            <Dependent Role="personeller">
+              <PropertyRef Name="altYoneticiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_izinler_izinTurleri">
+          <End Role="izinTurleri" Type="Self.izinTurleri" Multiplicity="0..1" />
+          <End Role="izinler" Type="Self.izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="izinTurleri">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="izinler">
+              <PropertyRef Name="izin_turu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_izinler_personeller">
+          <End Role="personeller" Type="Self.personeller" Multiplicity="0..1" />
+          <End Role="izinler" Type="Self.izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="personeller">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="izinler">
+              <PropertyRef Name="personel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="izinApp2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="altYoneticiler" EntityType="Self.altYoneticiler" />
+          <EntitySet Name="izinler" EntityType="Self.izinler" />
+          <EntitySet Name="izinTurleri" EntityType="Self.izinTurleri" />
+          <EntitySet Name="personeller" EntityType="Self.personeller" />
+          <EntitySet Name="sysAdmin" EntityType="Self.sysAdmin" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_personeller_altYoneticiler" Association="Self.FK_personeller_altYoneticiler">
+            <End Role="altYoneticiler" EntitySet="altYoneticiler" />
+            <End Role="personeller" EntitySet="personeller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_izinler_izinTurleri" Association="Self.FK_izinler_izinTurleri">
+            <End Role="izinTurleri" EntitySet="izinTurleri" />
+            <End Role="izinler" EntitySet="izinler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_izinler_personeller" Association="Self.FK_izinler_personeller">
+            <End Role="personeller" EntitySet="personeller" />
+            <End Role="izinler" EntitySet="izinler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="izinApp2ModelStoreContainer" CdmEntityContainer="izinApp2Entities">
+          <EntitySetMapping Name="altYoneticiler">
+            <EntityTypeMapping TypeName="izinApp2Model.altYoneticiler">
+              <MappingFragment StoreEntitySet="altYoneticiler">
+                <ScalarProperty Name="a_aktiflik" ColumnName="a_aktiflik" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="a_kullanici_adi" ColumnName="a_kullanici_adi" />
+                <ScalarProperty Name="a_kullanici_sifre" ColumnName="a_kullanici_sifre" />
+                <ScalarProperty Name="a_adi_soyadi" ColumnName="a_adi_soyadi" />
+                <ScalarProperty Name="a_email" ColumnName="a_email" />
+                <ScalarProperty Name="a_ise_giris_tarihi" ColumnName="a_ise_giris_tarihi" />
+                <ScalarProperty Name="a_olusturulma_tarihi" ColumnName="a_olusturulma_tarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="izinler">
+            <EntityTypeMapping TypeName="izinApp2Model.izinler">
+              <MappingFragment StoreEntitySet="izinler">
+                <ScalarProperty Name="izin_id" ColumnName="izin_id" />
+                <ScalarProperty Name="personel_id" ColumnName="personel_id" />
+                <ScalarProperty Name="alt_yonetici_id" ColumnName="alt_yonetici_id" />
+                <ScalarProperty Name="olusturulma_tarihi" ColumnName="olusturulma_tarihi" />
+                <ScalarProperty Name="baslangic_tarihi" ColumnName="baslangic_tarihi" />
+                <ScalarProperty Name="bitis_tarihi" ColumnName="bitis_tarihi" />
+                <ScalarProperty Name="izin_turu" ColumnName="izin_turu" />
+                <ScalarProperty Name="izin_aciklamasi" ColumnName="izin_aciklamasi" />
+                <ScalarProperty Name="izin_durumu" ColumnName="izin_durumu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="izinTurleri">
+            <EntityTypeMapping TypeName="izinApp2Model.izinTurleri">
+              <MappingFragment StoreEntitySet="izinTurleri">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="izin_adi" ColumnName="izin_adi" />
+                <ScalarProperty Name="izin_aktiflik" ColumnName="izin_aktiflik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personeller">
+            <EntityTypeMapping TypeName="izinApp2Model.personeller">
+              <MappingFragment StoreEntitySet="personeller">
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="p_kullanici_adi" ColumnName="p_kullanici_adi" />
+                <ScalarProperty Name="p_kullanici_sifre" ColumnName="p_kullanici_sifre" />
+                <ScalarProperty Name="p_adi_soyadi" ColumnName="p_adi_soyadi" />
+                <ScalarProperty Name="p_email" ColumnName="p_email" />
+                <ScalarProperty Name="p_aktiflik" ColumnName="p_aktiflik" />
+                <ScalarProperty Name="p_ise_giris_tarihi" ColumnName="p_ise_giris_tarihi" />
+                <ScalarProperty Name="p_olusturulma_tarihi" ColumnName="p_olusturulma_tarihi" />
+                <ScalarProperty Name="altYoneticiId" ColumnName="altYoneticiId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysAdmin">
+            <EntityTypeMapping TypeName="izinApp2Model.sysAdmin">
+              <MappingFragment StoreEntitySet="sysAdmin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="kullanici_adi" ColumnName="kullanici_adi" />
+                <ScalarProperty Name="kullanici_sifre" ColumnName="kullanici_sifre" />
+                <ScalarProperty Name="adi_soyadi" ColumnName="adi_soyadi" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="izinApp2Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

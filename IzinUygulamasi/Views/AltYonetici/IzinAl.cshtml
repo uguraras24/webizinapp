@@ -1,0 +1,100 @@
+﻿@model IzinUygulamasi.Models.izinler
+
+@{
+    Layout = "~/Views/Shared/_AltYoneticiLayout.cshtml";
+    ViewBag.Title = "İzin Alma Formu";
+    ViewBag.Menu = "izinal";
+}
+
+@section sweet
+{
+    @if (TempData["IzinAl"] == "basari")
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "Bilgi Penceresi",
+                html: 'İzin talebiniz başarıyla oluşturulmuştur.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/AltYonetici/Index';
+            });
+        </script>
+    }
+    @if (TempData["IzinAl"] == "hata")
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: "Bilgi Penceresi",
+                html: 'İzin talebi oluşturmada hata ile karşılaşıldı, lütfen tekrar deneyiniz.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/AltYonetici/IzinAl';
+            });
+        </script>
+    }
+}
+
+<div class="utils__content">
+    <section class="card">
+        <div class="card-header">
+            <span class="utils__title">
+                <strong>İzin Alma Formu</strong>
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <!-- Horizontal Form -->
+                            <div class="form-group row">
+                                @Html.Label("Üst Yönetici", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBox("ustYonetici", (string)ViewBag.SysAdmin, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.baslangic_tarihi, "İzin Başlangıç Tarihi", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.baslangic_tarihi, "İzin Başlangıç Tarihi", htmlAttributes: new { type = "datetime-local", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.bitis_tarihi, "İzin Bitiş Tarihi", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(m => m.bitis_tarihi, htmlAttributes: new { type = "datetime-local", @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.izin_turu, "İzin Türü", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.DropDownListFor(m => m.izin_turu, (IEnumerable<SelectListItem>)ViewBag.turList, null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.LabelFor(m => m.izin_aciklamasi, "İzin Açıklaması", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                                <div class="col-md-9">
+                                    @Html.TextAreaFor(m => m.izin_aciklamasi, htmlAttributes: new { @class = "form-control", @rows = 3, required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="form-group row">
+                                    <div class="col-md-9 offset-md-3">
+                                        <input type="submit" name="musteriEkle" class="btn btn-primary pl-4 pr-4" value="Ekle" />
+                                        <a href="" class="btn btn-default">Geri Dön</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,172 @@
+﻿@model IzinUygulamasi.Models.personeller
+@{
+    ViewBag.Title = "Personel Giriş Sayfası";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="<?php echo $kurumDescription; ?>">
+    <meta name="keywords" content="<?php echo $kurumKeywords; ?>">
+    <title>@ViewBag.Title</title>
+    <link href="components/dummy-assets/common/img/favicon.png" rel="shortcut icon">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,700i" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/owl.carousel/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/datatables/media/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/jquery-steps/demo/css/jquery.steps.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-linearicons/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-icomoon/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/vendors/sweetalert/sweetalert2.min.css">
+    <script src="~/Content/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/vendors/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/Content/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="~/Content/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+    <script src="~/Content/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
+    <script src="~/Content/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="~/Content/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/vendors/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+    <script src="~/Content/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/Content/vendors/sweetalert/sweetalert2.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/components/core/common/core.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/core/widgets/widgets.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/vendors/common/vendors.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/settings/common/settings.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/settings/themes/themes.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/menu-left/common/menu-left.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/menu-right/common/menu-right.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/top-bar/common/top-bar.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/footer/common/footer.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/pages/common/pages.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/ecommerce/common/ecommerce.cleanui.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/components/apps/common/apps.cleanui.css">
+    <script src="~/Content/components/menu-left/common/menu-left.cleanui.js"></script>
+    <script src="~/Content/components/menu-right/common/menu-right.cleanui.js"></script>
+    <style>
+
+        .card {
+            width: 500px
+        }
+
+        .nav-item .nav-link[disabled]:hover {
+        }
+    </style>
+</head>
+<body class="config--vertical config--borderLess menu-left--colorful menu-left--shadow">
+
+    <div class="container mt-1 pt-2">
+        <div class="card mx-auto border-0">
+            <h3 class="text-center mb-3 mt-3">İzin Uygulaması Personel Giriş Sayfası</h3>
+        </div>
+        <div class="card mx-auto border-0" style="margin-top:-25px">
+            <div class="card-header border-bottom-0 bg-transparent">
+                <ul class="nav nav-tabs justify-content-center pt-4" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active text-primary" id="pills-login-tab" data-toggle="pill" href="#kLogin" role="tab" aria-controls="pills-login"
+                           aria-selected="true">Personel Girişi</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body pb-4">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="kLogin" role="tabpanel" aria-labelledby="pills-login-tab">
+                        @using (Html.BeginForm("PersonelGiris", "Login", FormMethod.Post))
+                        {
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.p_kullanici_adi, new { @class = "form-control", id = "username", placeholder = "Kullanıcı Adı", required = "required" })
+                            </div>
+                            <div class="form-group">
+                                @Html.PasswordFor(m => m.p_kullanici_sifre, new { @class = "form-control password", id = "password", placeholder = "Şifre", required = "required" })
+                            </div>
+                            <div class="text-center">
+                                <div class="g-recaptcha d-inline-block" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                                <div class="alert alert-danger d-none" id="g-recaptcha1Alert" role="alert"><h3>Lütfen robot olmadığınızı doğrulayın.</h3></div>
+                            </div>
+                            <div class="text-center pt-2">
+                                <input type="submit" id="uLoginRequest" class="btn btn-primary" value="Giriş Yap" />
+                            </div>
+                            <div class="text-center pt-3">
+                                <span class="register-link">
+                                    <a href="/Login/AltYonetici" class="utils__link--blue utils__link--underlined">Alt Yönetici Kullanıcı Paneline gitmek için tıklayınız</a>
+                                </span>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mx-auto border-0" style="margin-top:-25px">
+            <h3 class="text-center mb-3 mt-3">Destek: support@izinapp.com</h3>
+        </div>
+    </div>
+
+    @if (TempData["PersonelGiris"] == "basari")
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: "Bilgi Penceresi",
+                html: 'Sisteme başarıyla giriş yapılmıştır.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/Personel/Index';
+            });
+        </script>
+    }
+
+    @if (TempData["PersonelGiris"] == "hata")
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: "Bilgi Penceresi",
+                html: 'Hatalı giriş, lütfen tekrar deneyiniz.',
+                showConfirmButton: true,
+                confirmButtonText: 'Tamam'
+            }).then(function () {
+                window.location = '/Login/Index';
+            });
+        </script>
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#uLoginRequest').click(function (e) {
+                var username = $("#username").val();
+                var password = $("#password").val();
+
+                if (username != "" && password != "") {
+                    var response = grecaptcha.getResponse();
+
+                    if (response.length == 0) {
+                        e.preventDefault();
+                        $("#g-recaptcha1Alert").addClass("d-block");
+                    }
+                }
+            });
+
+            $('.password').password({
+                eyeClass: '',
+                eyeOpenClass: 'icmn-eye',
+                eyeCloseClass: 'icmn-eye-blocked'
+            });
+        });
+    </script>
+
+</body>
+</html>
